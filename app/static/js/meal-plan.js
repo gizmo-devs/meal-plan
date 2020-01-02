@@ -74,7 +74,10 @@ function get_planned_meal(date, meal_data){
 };
 
 function update_dp() {
-    $('#datepicker').datepicker('update');
+    console.log('Updating DP with ::');
+    console.log(hl_dates);
+    //$('.datepicker').datepicker('destroy');
+    $('.datepicker').datepicker('update');
     return
 }
 
@@ -83,6 +86,7 @@ function myCallback(result) {
     console.log(result)
     hl_dates = result
     update_dp();
+    return
 }
 
 function update_cal(callback) {
@@ -132,13 +136,13 @@ $(document).ready(function() {
         changeDate: function(e){
             update_cal(myCallback)
             //hl_dates = fresh_dates(e.date)
-            //$('#datepicker').datepicker('update');
-            get_planned_meal(e.date);
+            //$('.datepicker').datepicker('update');
+            //get_planned_meal(e.date);
         },
         changeMonth: function(e){
             //hl_dates = fresh_dates(e.date)
             update_cal(myCallback)
         }
     });
-    update_cal(myCallback)
+    update_cal(myCallback);
 });
