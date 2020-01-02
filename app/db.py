@@ -5,13 +5,15 @@ from flask import current_app, g
 from flask.cli import with_appcontext
 
 
-def get_db(dict=None):
+def get_db(return_dict=None):
+    print(return_dict)
+    print (g)
     if 'db' not in g:
         g.db = sqlite3.connect(
             current_app.config['DATABASE'],
             detect_types=sqlite3.PARSE_DECLTYPES
         )
-        if dict is None:
+        if return_dict is None:
             g.db.row_factory = sqlite3.Row
         else:
             g.db.row_factory = dict_factory
@@ -19,8 +21,9 @@ def get_db(dict=None):
     return g.db
 
 
-def query_db(query, args=(), one=False, dict=None):
-    cur = get_db(dict).execute(query, args)
+def query_db(query, args=(), one=False, return_dict=None):
+    print(return_dict)
+    cur = get_db(return_dict).execute(query, args)
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
@@ -44,7 +47,7 @@ def dict_factory(cursor, row):
 def init_db():
     db = get_db()
 
-    with current_app.open_resource('schema.sql') as f:
+    with current_app.open_resource('data-files/schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 

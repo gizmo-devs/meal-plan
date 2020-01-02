@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Craig Attwood">
+
+  <title>{% block title %}{% endblock %} || Meal Planner</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/meal-plan.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/dp-css/bootstrap-datepicker3.min.css')}}"/>
+
+</head>
+<body>
+    {% include 'nav.html' %}
+    {% block content %}{% endblock %}
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+
+<!--  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.4.1.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap-datepicker.js')}}"></script>
+
+</body>
+</html>

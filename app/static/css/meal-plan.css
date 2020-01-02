@@ -1,0 +1,8 @@
+body {
+  padding-top: 56px;
+}
+.css-class-to-highlight{
+    border: 2px solid #FFF !important;
+    border-radius: 4px;
+    background-color: rgba(114, 200, 105, 0.26);
+}
