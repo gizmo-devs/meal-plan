@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jQuery UI Datepicker - Programmatically change selectable dates</title>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/meal-plan.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/dp-css/bootstrap-datepicker3.min.css')}}"/>
+
+
+
+
+</head>
+<body>
+    <h2>Programmatically Change Selectable Dates</h2>
+    <p>Click on the button to change the
+        disabled date from Tuesdays to Wednesday
+    </p>
+    <div id='datepicker'></div>
+    <br />
+    <br />
+    <button id="changeDates">Change to Wednesday</button>
+</body>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript">
+        $(function () {
+            var unavailableDay = 2; // disable tuesdays
+
+            function disableDays(date) {
+                var day = date.getDay();
+                return [(day != unavailableDay), "", ""];
+            }
+
+            $('#datepicker').datepicker({
+                beforeShowDay: disableDays
+            });
+
+            $("#changeDates").on('click', function () {
+                unavailableDay = 3; // disable wednesdays
+                $("#datepicker").datepicker("update");
+            });
+        });
+    </script>
+</html>
+

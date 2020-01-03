@@ -6,8 +6,6 @@ from flask.cli import with_appcontext
 
 
 def get_db(return_dict=None):
-    print(return_dict)
-    print (g)
     if 'db' not in g:
         g.db = sqlite3.connect(
             current_app.config['DATABASE'],
@@ -22,7 +20,6 @@ def get_db(return_dict=None):
 
 
 def query_db(query, args=(), one=False, return_dict=None):
-    print(return_dict)
     cur = get_db(return_dict).execute(query, args)
     rv = cur.fetchall()
     cur.close()

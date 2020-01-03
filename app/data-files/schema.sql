@@ -29,5 +29,5 @@ CREATE TABLE meals (
     url INTEGER NULL
 );
 
-INSERT INTO meals (chosen_meal, date, chosen_by) VALUES ("fisk 'n' chips", '2019-12-30', 1)
-INSERT INTO meals (chosen_meal, date, chosen_by) VALUES ("Curry", '2019-12-20', 1)
+INSERT INTO meals (chosen_meal, date, chosen_by) VALUES ("fisk 'n' chips", '2019-12-30', 1);
+INSERT INTO meals (chosen_meal, date, chosen_by) VALUES ("Curry", '2019-12-20', 1);

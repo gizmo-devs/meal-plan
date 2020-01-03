@@ -3,12 +3,13 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
     <div class="container">
       <div class="row">
         <div class="col-md-3">
             <div class="card my-4">
                 <div class="card-header bg-primary text-white">
-                    <h1 class="text-center pt-2">Calendar</h1>
+                    <h1 class="text-center pt-2" onclick="update_dp()">Calendar</h1>
                 </div>
                 <div class="card-body">
                     <div class="datepicker"></div>
@@ -17,34 +18,35 @@
         </div>
 
         <div class="col-md-3">
-            <div class="card my-4">
+            <div class="card my-4 meal-card">
                 <div class="card-header bg-primary text-white">
                     <h1 class="text-center pt-2">Today</h1>
                 </div>
                 <div class="card-body">
-                    <button class="btn btn-lg btn-info" onClick="get_planned_month()">Plan Meal</button>
+                    <button class="btn btn-lg btn-info">Plan Meal</button>
+                    <p></p>
                 </div>
             </div>
         </div>
 
           <div class="col-md-3">
-              <div class="card my-4">
+              <div class="card my-4 meal-card">
                 <div class="card-header bg-primary text-white">
                     <h1 class="text-center pt-2">Tomorrow</h1>
                 </div>
                 <div class="card-body">
-
+                    <p></p>
                 </div>
             </div>
         </div>
 
           <div class="col-md-3">
-              <div class="card my-4">
+              <div class="card my-4 meal-card">
                 <div class="card-header bg-primary text-white">
                     <h1 class="text-center pt-2">DATE</h1>
                 </div>
                 <div class="card-body">
-
+                    <p></p>
                 </div>
             </div>
         </div>
@@ -58,6 +60,9 @@
 <!--    <script type="text/javascript" src="{{url_for('static', filename='js/meal-plan.js')}}">-->
     <script>document.write('<script src="{{url_for('static', filename='js/meal-plan.js')}}?dev=' + Math.floor(Math.random() * 100000) + '"\><\/script>');</script>
 
+    </script>
+    <script type="text/javascript">
+        var datepicker = $.noConflict(true);
     </script>
 
 {% endblock content %}
