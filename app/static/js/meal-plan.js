@@ -9,67 +9,31 @@ var sel_date = {}
 /////////////////////////////////////////////
 // Creating JS Functions
 /////////////////////////////////////////////
-function fresh_dates(d){
-    max_day_in_month = new Date(d.getFullYear(), (d.getMonth() + 1), 0).getDate()
+function next_few_dates(){
+    var d = new Date(sel_date)
     return [
-        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
-        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
-        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
-        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
-        'OPS']
+        formatDate(d.setDate(d.getDate())),
+        formatDate(d.setDate(d.getDate() + 1)),
+        formatDate(d.setDate(d.getDate() + 1) )]
+//    max_day_in_month = new Date(d.getFullYear(), (d.getMonth() + 1), 0).getDate()
+//    return [
+//        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
+//        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
+//        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
+//        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
+//        'OPS']
 }
+function formatDate(date){
+    var d = new Date(date)
+    var weekday = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
+    var Months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Aug', 'Nov', 'Dec']
+    return weekday[d.getDay()] + ', ' + d.getDate() + " " + Months[d.getMonth()]
+}
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-function get_planned_meal(meal_data){
-
-//    console.log(date, t)
-    var dummy_Data = [
-        {
-            "meal":"fish and chips",
-            "date":"Thu Jan 02 2020 00:00:00 GMT+0000 (Greenwich Mean Time)"
-        },
-        {
-            "meal":"curry",
-            "date":"Thu Jan 12 2020 00:00:00 GMT+0000 (Greenwich Mean Time)"
-        },
-        {},
-        {
-            "meal":"roast",
-            "date":"Thu Jan 22 2020 00:00:00 GMT+0000 (Greenwich Mean Time)"
-        }
-    ]
-    var card = $('div.card.meal-card')
-    console.log(card)
-
-    for (m in meal_data) {
-
-        if (Object.keys(meal_data[m]).length > 1) {
-            console.log(meal_data[m])
-            card[m].children(0).html(this['date'])
-            card[m].children(1).html(meal_data[m]['meal'])
-        } else {
-            console.log('blank record')
-        }
-
-    }
-
-//    $('div.card').each(function(item){
-//        for (i=0; i=2; i++) {
-//            if (dummy_Data[i]['date'] == date.getTime()) {
-//                console.log('YES')
-//            }
-//        }
-//    });
-
-//        if (date.getTime() == t.getTime() ) {
-//            alert('Thats today?!');
-//            $('div.card').each(function(item){
-//                $(this).find('input').val(dummy_Data[item]['meal']);
-//            })
-//        }
-};
 
 function update_dp() {
     console.log('Updating DP with ::');
@@ -110,6 +74,26 @@ function update_cal(callback) {
     });
 }
 
+function update_card_headers() {
+    var dates = next_few_dates()
+
+    var meal_card = $('div.card.meal-card')
+    console.log(dates)
+    for (i=0; i < meal_card.length; i++){
+        meal_card.eq(i).children().find('h1').html(dates[i]);
+        var btn = meal_card.eq(i).children().find('.opnMdl')
+
+        btn.data("id", "NewValue");
+        console.log(btn)//.data('block', 10)//.data('date',dates[i])
+    }
+//    for (var i = 0; i = meal_card.length; i++) {
+//        console.log('Header ', i, dates[i])
+//        meal_card.eq(i).children().find('h1').html(dates[i])
+//        i++;
+//    }
+    return
+}
+
 function highlight_days_in_month(date) {
     if ($.inArray(date.getTime(), hl_dates) !== -1) {
         return {enabled:'true', classes:'css-class-to-highlight', tooltip:''};
@@ -126,10 +110,12 @@ function init_dp(){
     .on({
         changeDate: function(e){
             sel_date = new Date(e.date);
+            update_card_headers();
             update_cal(myCallback);
         }
         , changeMonth: function(e){
             sel_date = new Date(e.date);
+            update_card_headers();
             update_cal(myCallback);
         }
     });
@@ -160,6 +146,93 @@ function meal_data_response(meals) {
     return
 }
 
+function get_planned_meal(meal_data){
+
+//    console.log(date, t)
+    var dummy_Data = [
+        {
+            "id": 1,
+            "chosen_meal":"fish and chips",
+            "date":"Thu Jan 02 2020 00:00:00 GMT+0000 (Greenwich Mean Time)",
+            "chosen_by": "Craig",
+            "book": "Hairy Dieters",
+            "page": 15,
+            "url": "https://www.bbcgoodfood.com/"
+        }
+        //,{ ... }
+    ]
+    var card = $('div.card.meal-card')
+    //console.log(card)
+
+    for (m in meal_data) {
+        //console.log(meal_data[m], Object.keys(meal_data[m]).length)
+        if (Object.keys(meal_data[m]).length >= 1) {
+            var current_meal = meal_data[m][0]
+            update_meal_card(card.eq(m), current_meal)
+            //card.eq(m).children(0).find('h1').html(current_meal['date'])
+            //card.eq(m).children(0).find('p').html(current_meal['chosen_meal'])
+        } else {
+            update_meal_card(card.eq(m))
+        }
+
+    }
+
+//    $('div.card').each(function(item){
+//        for (i=0; i=2; i++) {
+//            if (dummy_Data[i]['date'] == date.getTime()) {
+//                console.log('YES')
+//            }
+//        }
+//    });
+
+//        if (date.getTime() == t.getTime() ) {
+//            alert('Thats today?!');
+//            $('div.card').each(function(item){
+//                $(this).find('input').val(dummy_Data[item]['meal']);
+//            })
+//        }
+};
+
+function update_meal_card(card, mealObj=null){
+    //console.log(card, mealObj);
+    if (mealObj === null) {
+        console.log('meal is null')
+        if ( !card.children().find('.planned_meal').hasClass('d-none') ){
+            card.children().find('.planned_meal').addClass('d-none')
+        }
+    } else {
+        //card.children().find('h1').html(mealObj['date']);
+        card.children().find('.chosen_meal').val(mealObj['chosen_meal']);
+        card.children().find('.book').val(mealObj['book']);
+        card.children().find('.book_page').val(mealObj['page']);
+        card.children().find('.url').val(mealObj['url']);
+        card.children().find('button').data('date', mealObj['date']);
+
+        if ( card.children().find('.planned_meal').hasClass('d-none') ){
+            card.children().find('.planned_meal').removeClass('d-none')
+        }
+    }
+    return
+}
+
+function load_meal(meal_id){
+    console.log(meal_id);
+//
+//    $.ajax({
+//        url : meal_get_url,
+//        success: callback
+//    });
+}
+
+function process_load_meal(meal) {
+    // Code that depends on 'result'
+
+    console.log('Res from Meal Plan', meals );
+    get_planned_meal(meals)
+    //$('.datepicker').datepicker("refresh") //
+    //update_dp();
+    return
+}
 
 //foo(myCallback);
 
@@ -191,7 +264,13 @@ $(document).ready(function() {
 
     update_cal(myCallback);
 
+    $('.opnMdl').click(function(e) {
 
+        //load_meal(this.data('id'));
+        console.log('Clicked');
+        console.log(e);
+        $('#meal_plan_modal').modal("show");
+    });
 
 
 });
