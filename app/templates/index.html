@@ -6,7 +6,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-lg-3">
             <div class="card my-4">
                 <div class="card-header bg-primary text-white">
                     <h1 class="text-center pt-2" onclick="update_dp()">Calendar</h1>
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-lg-3">
             <div class="card my-4 meal-card">
                 <div class="card-header bg-primary text-white">
                     <h1 class="text-center pt-2">Today</h1>
@@ -41,12 +41,12 @@
                             <input class="form-control url" readonly value=""/>
                         </div>
                     </div>
-                    <button class="btn btn-lg btn-info btn-block opnMdl" role="button" data-toggle="modal" data-target="#meal_plan_modal">Plan Meal</button>
+                    <button class="btn btn-lg btn-info btn-block opnMdl" role="button">Plan Meal</button>
                 </div>
             </div>
         </div>
 
-          <div class="col-md-3">
+          <div class="col-lg-3">
               <div class="card my-4 meal-card">
                 <div class="card-header bg-primary text-white">
                     <h1 class="text-center pt-2">Tomorrow</h1>
@@ -55,27 +55,27 @@
                     <div class="planned_meal d-none">
                         <div class="form-group">
                             <label for="chosen_meal">Meal:</label>
-                            <input class="form-control" readonly class="chosen_meal" value=""/>
+                            <input class="form-control chosen_meal" readonly value=""/>
                         </div>
                         <div class="form-group">
                             <label for="book">Book:</label>
-                            <input class="form-control" readonly class="book" value=""/>
+                            <input class="form-control book" readonly value=""/>
                         </div>
                         <div class="form-group">
                             <label for="book_page">Page:</label>
-                            <input class="form-control" readonly class="book_page" value=""/>
+                            <input class="form-control book_page" readonly value=""/>
                         </div>
                         <div class="form-group">
                             <label for="url">URL:</label>
-                            <input class="form-control" readonly class="url" value=""/>
+                            <input class="form-control url" readonly value=""/>
                         </div>
                     </div>
-                    <button class="btn btn-lg btn-info btn-block opnMdl" role="button" data-toggle="modal" data-target="#meal_plan_modal">Plan Meal</button>
+                    <button class="btn btn-lg btn-info btn-block opnMdl" role="button">Plan Meal</button>
                 </div>
             </div>
         </div>
 
-          <div class="col-md-3">
+          <div class="col-lg-3">
               <div class="card my-4 meal-card">
                 <div class="card-header bg-primary text-white">
                     <h1 class="text-center pt-2">DATE</h1>
@@ -99,17 +99,12 @@
                             <input class="form-control url" readonly value=""/>
                         </div>
                     </div>
-                    <button class="btn btn-lg btn-info btn-block opnMdl" role="button" data-toggle="modal" data-target="#meal_plan_modal">Plan Meal</button>
+                    <button class="btn btn-lg btn-info btn-block opnMdl" role="button">Plan Meal</button>
                 </div>
             </div>
         </div>
       </div>
     </div>
-
-<!-- Button to Open the Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#meal_plan_modal">
-  Open modal
-</button>
 
 <!-- The Modal -->
 <div class="modal fade" id="meal_plan_modal">
@@ -126,25 +121,30 @@
       <div class="modal-body">
         <div class="form-group">
             <label for="modal_chosen_meal">Meal:</label>
-            <input id="modal_chosen_meal" class="form-control" class="chosen_meal" value=""/>
+            <input name="modal_chosen_meal" id="modal_chosen_meal" class="form-control" class="chosen_meal" value=""/>
         </div>
         <div class="form-group">
             <label for="modal_book">Book:</label>
-            <input id="modal_book" class="form-control" class="book" value=""/>
+            <input name="modal_book" id="modal_book" class="form-control" class="book" value=""/>
         </div>
         <div class="form-group">
             <label for="modal_book_page">Page:</label>
-            <input id="modal_book_page" class="form-control" class="book_page" value=""/>
+            <input name="modal_book_page" id="modal_book_page" class="form-control" class="book_page" value=""/>
         </div>
         <div class="form-group">
             <label for="modal_url">URL:</label>
-            <input id="modal_url" class="form-control" class="url" value=""/>
+            <input name="modal_url" id="modal_url" class="form-control" class="url" value=""/>
+        </div>
+          <div class="form-group d-none">
+            <label for="modal_id">ID:</label>
+            <input type="hidden" name="modal_id" id="modal_id" class="form-control" class="id" value=""/>
         </div>
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" id="modal_save" data-dismiss="modal">Save</button>
       </div>
 
     </div>

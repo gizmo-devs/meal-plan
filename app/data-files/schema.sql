@@ -21,7 +21,7 @@ INSERT INTO users ('username', 'firstname', 'surname', 'email', 'access', 'passw
 
 CREATE TABLE meals (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    chosen_meal TEXT UNIQUE NOT NULL,
+    chosen_meal TEXT NOT NULL,
     date DATE NOT NULL,
     chosen_by INTEGER NOT NULL,
     book INTEGER NULL,

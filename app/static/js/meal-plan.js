@@ -1,7 +1,15 @@
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+
 /////////////////////////////////////////////
 // Setting Global vars
 /////////////////////////////////////////////
 //var hl_dates = [ new Date(2020, 0, 3).getTime(), new Date(2020, 0, 6).getTime(), new Date(2020, 0, 15).getTime(), new Date(2020, 0, 17).getTime() ]
+
 var today = new Date();
 var hl_dates = []
 var sel_date = {}
@@ -12,17 +20,12 @@ var sel_date = {}
 function next_few_dates(){
     var d = new Date(sel_date)
     return [
-        formatDate(d.setDate(d.getDate())),
-        formatDate(d.setDate(d.getDate() + 1)),
-        formatDate(d.setDate(d.getDate() + 1) )]
-//    max_day_in_month = new Date(d.getFullYear(), (d.getMonth() + 1), 0).getDate()
-//    return [
-//        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
-//        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
-//        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
-//        new Date(2020, d.getMonth(), getRandomInt(max_day_in_month)).getTime(),
-//        'OPS']
+        d,
+        d.addDays(1),
+        d.addDays(2)
+        ]
 }
+
 function formatDate(date){
     var d = new Date(date)
     var weekday = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
@@ -39,26 +42,28 @@ function update_dp() {
     console.log('Updating DP with ::');
     console.log(hl_dates);
     //$('.datepicker').datepicker('remove');
-    //$('.datepicker').datepicker("refresh")
-    get_meal_data(meal_data_response)
+    //$('.datepicker').datepicker("update")
+    get_meal_data(meal_data_response);
     return
 }
 
 function myCallback(result) {
     // Code that depends on 'result'
     hl_dates = result;
-    //$('.datepicker').datepicker("refresh") //
+    //$('.datepicker').datepicker("refresh")
     update_dp();
     return
 }
 
 function update_cal(callback) {
     //console.log(typeof sel_date);
-    //console.log(sel_date);
+    console.log('sel_date', sel_date);
 
-    if (isNaN(sel_date)){
+    if ($.isEmptyObject(sel_date)){
+        console.log('sel_date :: EMPTY', sel_date)
         get_url = 'calendar/month'
     } else {
+        console.log('sel_date :: NOT EMPTY', sel_date)
         get_url = 'calendar/month/' + sel_date.getFullYear() +'/'+ (sel_date.getMonth() + 1)
     }
     console.log(get_url);
@@ -78,13 +83,13 @@ function update_card_headers() {
     var dates = next_few_dates()
 
     var meal_card = $('div.card.meal-card')
-    console.log(dates)
+    //console.log(dates)
     for (i=0; i < meal_card.length; i++){
-        meal_card.eq(i).children().find('h1').html(dates[i]);
-        var btn = meal_card.eq(i).children().find('.opnMdl')
-
-        btn.data("id", "NewValue");
-        console.log(btn)//.data('block', 10)//.data('date',dates[i])
+        meal_card.eq(i).children().find('h1').html(formatDate(dates[i]));
+        var btn = meal_card.eq(i).children().find('button.opnMdl')
+        //console.log(btn[0])
+        btn.val(dates[i]);//new Date(dates[i]));
+        //console.log("Updated button vals", dates[i], formatDate(dates[i]))
     }
 //    for (var i = 0; i = meal_card.length; i++) {
 //        console.log('Header ', i, dates[i])
@@ -102,6 +107,7 @@ function highlight_days_in_month(date) {
 
 function init_dp(){
     $(".datepicker").datepicker({
+      weekStart: 1,
       inline: true,
       sideBySide: true,
       todayHighlight: true,
@@ -124,7 +130,7 @@ function init_dp(){
 
 function get_meal_data(callback) {
     var meal_get_url = "";
-    if (isNaN(sel_date.getDate)){
+    if (!$.isEmptyObject(sel_date)){
         meal_get_url = 'calendar/date/' + sel_date.getFullYear() + '/' + (sel_date.getMonth() +1) + '/' + sel_date.getDate();
     } else {
         return
@@ -147,26 +153,23 @@ function meal_data_response(meals) {
 }
 
 function get_planned_meal(meal_data){
-
-//    console.log(date, t)
-    var dummy_Data = [
-        {
-            "id": 1,
-            "chosen_meal":"fish and chips",
-            "date":"Thu Jan 02 2020 00:00:00 GMT+0000 (Greenwich Mean Time)",
-            "chosen_by": "Craig",
-            "book": "Hairy Dieters",
-            "page": 15,
-            "url": "https://www.bbcgoodfood.com/"
-        }
-        //,{ ... }
-    ]
+//    var dummy_Data = [
+//        {
+//            "id": 1,
+//            "chosen_meal":"fish and chips",
+//            "date":"Thu Jan 02 2020 00:00:00 GMT+0000 (Greenwich Mean Time)",
+//            "chosen_by": "Craig",
+//            "book": "Hairy Dieters",
+//            "page": 15,
+//            "url": "https://www.bbcgoodfood.com/"
+//        }
+//        //,{ ... }
+//    ]
     var card = $('div.card.meal-card')
-    //console.log(card)
 
     for (m in meal_data) {
         //console.log(meal_data[m], Object.keys(meal_data[m]).length)
-        if (Object.keys(meal_data[m]).length >= 1) {
+        if (Object.keys(meal_data[m]).length == 1) {
             var current_meal = meal_data[m][0]
             update_meal_card(card.eq(m), current_meal)
             //card.eq(m).children(0).find('h1').html(current_meal['date'])
@@ -174,23 +177,7 @@ function get_planned_meal(meal_data){
         } else {
             update_meal_card(card.eq(m))
         }
-
     }
-
-//    $('div.card').each(function(item){
-//        for (i=0; i=2; i++) {
-//            if (dummy_Data[i]['date'] == date.getTime()) {
-//                console.log('YES')
-//            }
-//        }
-//    });
-
-//        if (date.getTime() == t.getTime() ) {
-//            alert('Thats today?!');
-//            $('div.card').each(function(item){
-//                $(this).find('input').val(dummy_Data[item]['meal']);
-//            })
-//        }
 };
 
 function update_meal_card(card, mealObj=null){
@@ -200,13 +187,14 @@ function update_meal_card(card, mealObj=null){
         if ( !card.children().find('.planned_meal').hasClass('d-none') ){
             card.children().find('.planned_meal').addClass('d-none')
         }
+        card.children().find('button').html('Add Meal');
     } else {
         //card.children().find('h1').html(mealObj['date']);
         card.children().find('.chosen_meal').val(mealObj['chosen_meal']);
         card.children().find('.book').val(mealObj['book']);
         card.children().find('.book_page').val(mealObj['page']);
         card.children().find('.url').val(mealObj['url']);
-        card.children().find('button').data('date', mealObj['date']);
+        card.children().find('button').html('Update Meal');
 
         if ( card.children().find('.planned_meal').hasClass('d-none') ){
             card.children().find('.planned_meal').removeClass('d-none')
@@ -215,24 +203,83 @@ function update_meal_card(card, mealObj=null){
     return
 }
 
-function load_meal(meal_id){
-    console.log(meal_id);
-//
-//    $.ajax({
-//        url : meal_get_url,
-//        success: callback
-//    });
+function load_meal(meal_date, callback){
+    meal_get_url = 'calendar/date/' + meal_date.getFullYear() + '/' + (meal_date.getMonth() +1) + '/' + meal_date.getDate();
+    console.log('calling ' + meal_get_url)
+    $.ajax({
+        url : meal_get_url,
+        success: callback
+    });
 }
 
 function process_load_meal(meal) {
     // Code that depends on 'result'
-
-    console.log('Res from Meal Plan', meals );
-    get_planned_meal(meals)
+    console.log('Res from selected Date', meal[0] );
+    if (meal[0].length == 0 ) {
+        console.log("NO MEAL")
+        load_modal()
+        return
+    } else {
+        load_modal(meal[0]);
+    }
+    //get_planned_meal(meals)
     //$('.datepicker').datepicker("refresh") //
     //update_dp();
     return
 }
+
+function load_modal(planned_meal=null) {
+    console.log('Loading Modal', planned_meal)
+    var modal = $('#meal_plan_modal')
+
+    var header = modal.children().find('h4.modal-title')
+    var m_body = modal.children().find('.modal-body')
+    if (planned_meal == null) {
+         // Clear modal
+         //console.log('clear modal')
+         header[0].innerHTML = 'Add meal : '
+         var inputs = m_body.children().find('input')
+         inputs.each(function(e){
+            $(this).val('');
+         })
+    } else {
+         header[0].innerHTML = 'Planned meal : ' + formatDate(new Date(planned_meal[0]['date']))
+         $('#modal_id').val(planned_meal[0]['id'])
+         $('#modal_chosen_meal').val(planned_meal[0]['chosen_meal'])
+         $('#modal_book').val(planned_meal[0]['book'])
+         $('#modal_book_page').val(planned_meal[0]['page'])
+         $('#url').val(planned_meal[0]['url'])
+    }
+
+    $('#meal_plan_modal').modal("show");
+    return
+}
+
+//function post_meal(callback){
+function post_meal(callback, d){
+    meal_post_url = 'calendar/modify/day'
+    console.log(meal_post_url, d)
+    d = new Date(d)
+    $.ajax({
+        type: 'POST',
+        data: {
+            'm_id' : $('#modal_id').val(),
+            'meal': $('#modal_chosen_meal').val(),
+            'book': $('#modal_book').val(),
+            'page': $('#modal_book_page').val(),
+            'url': $('#modal_url').val(),
+            'd': d.getFullYear() + '-' +( d.getMonth() +1 ) + '-' + d.getDate()
+        },
+        url : meal_post_url,
+        success: callback
+    });
+}
+
+function post_meal_response(resp) {
+    //alert(resp)
+    update_cal(myCallback)
+}
+
 
 //foo(myCallback);
 
@@ -260,17 +307,21 @@ $(document).ready(function() {
     //alert(get_planned_month());
     //var hl_dates = get_planned_month();
     //console.log(hl_dates);
-    init_dp()
+    init_dp();
 
     update_cal(myCallback);
 
-    $('.opnMdl').click(function(e) {
+    $('.opnMdl').click(function() {
+        //alert($(this).val());
+        d = new Date($(this).val())
+        $('#modal_save').val(d);
+        load_meal(d, process_load_meal);
 
-        //load_meal(this.data('id'));
-        console.log('Clicked');
-        console.log(e);
-        $('#meal_plan_modal').modal("show");
+        //console.log('Clicked');
+        //console.log(e);
     });
-
+    $('#modal_save').click(function(){
+        post_meal(post_meal_response, $(this).val())
+    })
 
 });
