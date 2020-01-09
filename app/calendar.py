@@ -1,4 +1,4 @@
-from db import get_db, query_db, close_db
+from .db import get_db, query_db, close_db
 from flask import (
     Blueprint, jsonify, flash, g, redirect, render_template, request, session, url_for
 )
