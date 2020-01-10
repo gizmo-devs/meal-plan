@@ -74,7 +74,7 @@ def update_date():
         d = datetime.datetime.strptime(request.form['d'],'%Y-%m-%d')
         db = get_db()
         print(meal_id, meal, url, book, page, d)
-        if meal_id.decode() > 0:
+        if meal_id > 0:
             print('Add new meal to DB')
             sql = """
             INSERT INTO meals (chosen_meal, book, page, url, date, chosen_by) VALUES (?, ?, ?, ?, date(?) , ?)
