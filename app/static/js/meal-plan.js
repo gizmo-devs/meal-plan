@@ -87,15 +87,8 @@ function update_card_headers() {
     for (i=0; i < meal_card.length; i++){
         meal_card.eq(i).children().find('h1').html(formatDate(dates[i]));
         var btn = meal_card.eq(i).children().find('button.opnMdl')
-        //console.log(btn[0])
-        btn.val(dates[i]);//new Date(dates[i]));
-        //console.log("Updated button vals", dates[i], formatDate(dates[i]))
+        btn.val(dates[i]);
     }
-//    for (var i = 0; i = meal_card.length; i++) {
-//        console.log('Header ', i, dates[i])
-//        meal_card.eq(i).children().find('h1').html(dates[i])
-//        i++;
-//    }
     return
 }
 
@@ -107,11 +100,12 @@ function highlight_days_in_month(date) {
 
 function init_dp(){
     $(".datepicker").datepicker({
-      weekStart: 1,
+      //weekStart: 1,
       inline: true,
       sideBySide: true,
       todayHighlight: true,
       beforeShowDay: highlight_days_in_month
+      //,beforeShow: update_cal(myCallback)
     })
     .on({
         changeDate: function(e){
@@ -143,7 +137,7 @@ function get_meal_data(callback) {
 }
 
 function meal_data_response(meals) {
-    // Code that depends on 'result'
+    // Code that depends on 'meals'
 
     console.log('Res from Meal Plan', meals );
     get_planned_meal(meals)
@@ -153,27 +147,12 @@ function meal_data_response(meals) {
 }
 
 function get_planned_meal(meal_data){
-//    var dummy_Data = [
-//        {
-//            "id": 1,
-//            "chosen_meal":"fish and chips",
-//            "date":"Thu Jan 02 2020 00:00:00 GMT+0000 (Greenwich Mean Time)",
-//            "chosen_by": "Craig",
-//            "book": "Hairy Dieters",
-//            "page": 15,
-//            "url": "https://www.bbcgoodfood.com/"
-//        }
-//        //,{ ... }
-//    ]
     var card = $('div.card.meal-card')
 
     for (m in meal_data) {
-        //console.log(meal_data[m], Object.keys(meal_data[m]).length)
         if (Object.keys(meal_data[m]).length == 1) {
             var current_meal = meal_data[m][0]
             update_meal_card(card.eq(m), current_meal)
-            //card.eq(m).children(0).find('h1').html(current_meal['date'])
-            //card.eq(m).children(0).find('p').html(current_meal['chosen_meal'])
         } else {
             update_meal_card(card.eq(m))
         }
@@ -189,7 +168,6 @@ function update_meal_card(card, mealObj=null){
         }
         card.children().find('button').html('Add Meal');
     } else {
-        //card.children().find('h1').html(mealObj['date']);
         card.children().find('.chosen_meal').val(mealObj['chosen_meal']);
         card.children().find('.book').val(mealObj['book']);
         card.children().find('.book_page').val(mealObj['page']);
