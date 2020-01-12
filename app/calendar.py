@@ -75,7 +75,7 @@ def update_date():
         db = get_db()
         print(meal_id, meal, url, book, page, d)
         print(meal_id, type(meal_id))
-        if int(meal_id) > 0:
+        if meal_id in [None, 'None', '']:
             print('Add new meal to DB')
             sql = """
             INSERT INTO meals (chosen_meal, book, page, url, date, chosen_by) VALUES (?, ?, ?, ?, date(?) , ?)
