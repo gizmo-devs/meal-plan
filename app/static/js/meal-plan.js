@@ -30,7 +30,7 @@ function formatDate(date){
     var d = new Date(date)
     var weekday = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
     var Months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Aug', 'Nov', 'Dec']
-    return weekday[d.getDay()] + ', ' + d.getDate() + " " + Months[d.getMonth()]
+    return weekday[d.getDay()-1] + ', ' + d.getDate() + " " + Months[d.getMonth()]
 }
 
 function getRandomInt(max) {
@@ -100,7 +100,7 @@ function highlight_days_in_month(date) {
 
 function init_dp(){
     $(".datepicker").datepicker({
-      //weekStart: 1,
+      weekStart: 1,
       inline: true,
       sideBySide: true,
       todayHighlight: true,

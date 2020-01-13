@@ -4,8 +4,8 @@
 
 {% block content %}
 
-    <div class="container">
-      <div class="row">
+<div class="container">
+    <div class="row">
         <div class="col-lg-3">
             <div class="card my-4">
                 <div class="card-header bg-primary text-white">
@@ -16,7 +16,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-3">
             <div class="card my-4 meal-card">
                 <div class="card-header bg-primary text-white">
@@ -45,9 +44,8 @@
                 </div>
             </div>
         </div>
-
-          <div class="col-lg-3">
-              <div class="card my-4 meal-card">
+        <div class="col-lg-3">
+            <div class="card my-4 meal-card">
                 <div class="card-header bg-primary text-white">
                     <h1 class="text-center pt-2">Tomorrow</h1>
                 </div>
@@ -75,8 +73,8 @@
             </div>
         </div>
 
-          <div class="col-lg-3">
-              <div class="card my-4 meal-card">
+        <div class="col-lg-3">
+            <div class="card my-4 meal-card">
                 <div class="card-header bg-primary text-white">
                     <h1 class="text-center pt-2">DATE</h1>
                 </div>
@@ -103,60 +101,64 @@
                 </div>
             </div>
         </div>
-      </div>
+        </div>
     </div>
+</div>
 
 <!-- The Modal -->
 <div class="modal fade" id="meal_plan_modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-        <div class="form-group">
-            <label for="modal_chosen_meal">Meal:</label>
-            <input name="modal_chosen_meal" id="modal_chosen_meal" class="form-control" class="chosen_meal" value=""/>
-        </div>
-        <div class="form-group">
-            <label for="modal_book">Book:</label>
-            <input name="modal_book" id="modal_book" class="form-control" class="book" value=""/>
-        </div>
-        <div class="form-group">
-            <label for="modal_book_page">Page:</label>
-            <input name="modal_book_page" id="modal_book_page" class="form-control" class="book_page" value=""/>
-        </div>
-        <div class="form-group">
-            <label for="modal_url">URL:</label>
-            <input name="modal_url" id="modal_url" class="form-control" class="url" value=""/>
-        </div>
-          <div class="form-group d-none">
-            <label for="modal_id">ID:</label>
-            <input type="hidden" name="modal_id" id="modal_id" class="form-control" class="id" value=""/>
-        </div>
-      </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modal_chosen_meal">Meal:</label>
+                    <input name="modal_chosen_meal" id="modal_chosen_meal" class="form-control" class="chosen_meal"
+                           value=""/>
+                </div>
+                <div class="form-group">
+                    <label for="modal_book">Book:</label>
+                    <input name="modal_book" id="modal_book" class="form-control" class="book" value=""/>
+                </div>
+                <div class="form-group">
+                    <label for="modal_book_page">Page:</label>
+                    <input name="modal_book_page" id="modal_book_page" class="form-control" class="book_page" value=""/>
+                </div>
+                <div class="form-group">
+                    <label for="modal_url">URL:</label>
+                    <input name="modal_url" id="modal_url" class="form-control" class="url" value=""/>
+                </div>
+                <div class="form-group d-none">
+                    <label for="modal_id">ID:</label>
+                    <input type="hidden" name="modal_id" id="modal_id" class="form-control" class="id" value=""/>
+                </div>
+            </div>
 
-      <!-- Modal footer -->
-      <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success" id="modal_save" data-dismiss="modal">Save</button>
-      </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="modal_save" data-dismiss="modal">Save</button>
+            </div>
 
+        </div>
     </div>
-  </div>
 </div>
 
-    <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.4.1.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.4.1.min.js')}}"></script>
 <!--    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
-    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap-datepicker.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/bootstrap-datepicker.js')}}"></script>
 <!--    <script type="text/javascript" src="{{url_for('static', filename='js/meal-plan.js')}}">-->
-    <script>document.write('<script src="{{url_for('static', filename='js/meal-plan.js')}}?dev=' + Math.floor(Math.random() * 100000) + '"\><\/script>');</script>
+<script>
+    document.write('<script src="{{url_for('static', filename='js/meal-plan.js')}}?dev=' + Math.floor(Math.random() * 100000) + '"\><\/script>');
+</script>
 
-    </script>
+</script>
 
 {% endblock content %}

@@ -4,9 +4,15 @@ from flask import (
 import datetime
 from .auth import login_required
 
-bp = Blueprint('page', __name__, url_prefix='/')
+bp = Blueprint('view', __name__, url_prefix='/')
 
 @bp.route('/')
 @login_required
-def start():
-    return render_template('index.html')
+def plan():
+    return render_template('plan.html')
+
+@bp.route('/shopping-list')
+@login_required
+def shopping_list():
+    return render_template('shopping-list.html')
+

@@ -8,11 +8,11 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Meal Planner
+            <a class="nav-link" href="{{ url_for('view.plan') }}">Meal Planner
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Shopping List</a>
+            <a class="nav-link" href="{{ url_for('view.shopping_list') }}">Shopping List</a>
           </li>
           <span class="navbar-text username_placeholder pl-2">
             {{g.user.username}}
