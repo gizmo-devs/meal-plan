@@ -1,0 +1,6 @@
+CREATE TABLE shopping_list (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item TEXT NOT NULL,
+    booked_by INTEGER NOT NULL,
+    collected DATE NULL DEFAULT NULL
+);

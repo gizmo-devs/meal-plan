@@ -24,23 +24,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import db, auth, calendar, views
+    from . import db, auth, calendar, views, shopping_list
     db.init_app(app)
     app.register_blueprint(auth.bp)
     app.register_blueprint(calendar.bp)
+    app.register_blueprint(shopping_list.bp)
     app.register_blueprint(views.bp)
-
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'\
-
-    @app.route('/dp')
-    def pd():
-        return render_template('dp_test.html')
-
-
-
-
 
     return app

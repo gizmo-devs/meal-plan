@@ -11,10 +11,11 @@ def get_db(return_dict=None):
             current_app.config['DATABASE'],
             detect_types=sqlite3.PARSE_DECLTYPES
         )
-        if return_dict is None:
-            g.db.row_factory = sqlite3.Row
-        else:
-            g.db.row_factory = dict_factory
+
+    if return_dict is None:
+        g.db.row_factory = sqlite3.Row
+    else:
+        g.db.row_factory = dict_factory
 
     return g.db
 
@@ -57,6 +58,24 @@ def init_db_command():
 # Finish 'flask init-db' command
 
 
+# Start 'flask update-db' command
+def update_db():
+    db = get_db()
+
+    with current_app.open_resource('data-files/db-update.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+
+
+@click.command('update-db')
+@with_appcontext
+def update_db_command():
+    """Clear the existing data and create new tables."""
+    update_db()
+    click.echo('Database updated.')
+# Finish 'flask update-db' command
+
+
 def init_app(app):
     app.teardown_appcontext(close_db)
+    app.cli.add_command(update_db_command)
     app.cli.add_command(init_db_command)

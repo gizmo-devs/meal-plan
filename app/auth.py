@@ -17,16 +17,19 @@ def register():
         surname  = request.form['surname']
         email = request.form['email']
         pin = request.form['pin']
+        conf_pin = request.form['conf-pin']
 
+        print(pin, conf_pin)
         username = firstname +', '+ surname
 
         db = get_db()
         error = None
-
         if not username:
             error = 'Username is required.'
         elif not pin:
             error = 'PIN is required.'
+        elif not pin == conf_pin:
+            error = 'PINs do not match'
         elif db.execute(
             'SELECT id FROM users WHERE username = ?', (username,)
         ).fetchone() is not None:
@@ -58,9 +61,8 @@ def login():
 
         for user in users:
             if not check_password_hash(user['password'], password):
-                error = 'Incorrect password.'
+                error = 'Incorrect PIN.'
             else:
-                print('pin correct')
                 error = None
                 current_user = user
                 break
@@ -68,7 +70,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return redirect(url_for('page.start'))
+            return redirect(url_for('view.plan'))
 
         flash(error)
 

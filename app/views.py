@@ -3,6 +3,7 @@ from flask import (
 )
 import datetime
 from .auth import login_required
+import shopping_list
 
 bp = Blueprint('view', __name__, url_prefix='/')
 
@@ -13,6 +14,6 @@ def plan():
 
 @bp.route('/shopping-list')
 @login_required
-def shopping_list():
+def shopping():
     return render_template('shopping-list.html')
 
