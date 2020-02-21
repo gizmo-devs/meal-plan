@@ -43,13 +43,13 @@
 
         <div class="form-group">
           <label for="pin" class="sr-only">PIN:</label>
-          <input type="password" class="form-control" id="pin" name="pin" placeholder="PIN" required>
+          <input type="password" inputmode="numeric" pattern="[0-9]*" class="form-control" id="pin" name="pin" placeholder="PIN" required>
           <small id="pinHelpBlock" class="form-text text-muted">Please don't use bank or phone PINs</small>
         </div>
 
         <div class="form-group">
           <label for="conf-pin" class="sr-only">Confirm PIN:</label>
-          <input type="password" class="form-control" id="conf-pin" name="conf-pin" placeholder="Confirm PIN" required>
+          <input type="password" inputmode="numeric" pattern="[0-9]*" class="form-control" id="conf-pin" name="conf-pin" placeholder="Confirm PIN" required>
         </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
