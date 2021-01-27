@@ -1,5 +1,15 @@
 # meal-plan
 
+To get this up and running be sure that the proxy and letsencrypt service is running.
+
+Then run the docker compose command:
+
+```
+docker-compose up --detach
+```
+
+else:
+
 
 build the app:
 `docker build -t mealplan_img .`
