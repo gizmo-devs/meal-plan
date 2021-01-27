@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  webapp:
+    build: .
+    volumes:
+      - type: bind
+        source: ./instance
+        target: /app/instance
+    environment:
+      VIRTUAL_HOST: mealplan.craigattwood.co.uk
+      LETSENCRYPT_HOST: mealplan.craigattwood.co.uk
